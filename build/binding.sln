@@ -1,0 +1,48 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(Development)", "..\Development", "{CF8265A2-C3A9-1A7B-E98F-B996B845CFA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(React)", "..\Development\React", "{C941A0BA-7D96-F0F5-A503-1EC58D806878}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(mean-auth-app)", "..\Development\React\mean-auth-app", "{D824EDA0-5C5D-68EC-613B-B0698BF7696F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node-addon-api)", "..\Development\React\mean-auth-app\node_modules\node-addon-api", "{ADB66DA3-4EB3-B6C8-744F-3D3767BDFC97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node_modules)", "..\Development\React\mean-auth-app\node_modules", "{942794E1-716A-4D2F-8374-00E8919F3FE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\Development\React\mean-auth-app\node_modules\node-addon-api\src", "{3C782F16-83F2-7559-E011-E33FCA6D84D2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "native", "native.vcxproj", "{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{465A506C-E2E2-8110-9123-98C648B612CE} = {465A506C-E2E2-8110-9123-98C648B612CE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nothing", "..\node_modules\node-addon-api\src\nothing.vcxproj", "{465A506C-E2E2-8110-9123-98C648B612CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{465A506C-E2E2-8110-9123-98C648B612CE}.Debug|x64.ActiveCfg = Debug|x64
+		{465A506C-E2E2-8110-9123-98C648B612CE}.Debug|x64.Build.0 = Debug|x64
+		{465A506C-E2E2-8110-9123-98C648B612CE}.Release|x64.ActiveCfg = Release|x64
+		{465A506C-E2E2-8110-9123-98C648B612CE}.Release|x64.Build.0 = Release|x64
+		{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}.Debug|x64.ActiveCfg = Debug|x64
+		{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}.Debug|x64.Build.0 = Debug|x64
+		{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}.Release|x64.ActiveCfg = Release|x64
+		{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C941A0BA-7D96-F0F5-A503-1EC58D806878} = {CF8265A2-C3A9-1A7B-E98F-B996B845CFA6}
+		{D824EDA0-5C5D-68EC-613B-B0698BF7696F} = {C941A0BA-7D96-F0F5-A503-1EC58D806878}
+		{942794E1-716A-4D2F-8374-00E8919F3FE7} = {D824EDA0-5C5D-68EC-613B-B0698BF7696F}
+		{3C782F16-83F2-7559-E011-E33FCA6D84D2} = {ADB66DA3-4EB3-B6C8-744F-3D3767BDFC97}
+		{ADB66DA3-4EB3-B6C8-744F-3D3767BDFC97} = {942794E1-716A-4D2F-8374-00E8919F3FE7}
+		{465A506C-E2E2-8110-9123-98C648B612CE} = {3C782F16-83F2-7559-E011-E33FCA6D84D2}
+	EndGlobalSection
+EndGlobal

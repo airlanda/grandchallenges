@@ -1,0 +1,24 @@
+{
+  "name": "mean-auth-app",
+  "version": "1.0.0",
+  "description": "Mean stack auth app",
+  "main": "app.js",
+  "gypfile": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "^5.4.5",
+    "node-addon-api": "^1.7.1",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Aggie",
+  "license": "ISC"
+}
