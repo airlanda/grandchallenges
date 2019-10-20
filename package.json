@@ -1,24 +1,20 @@
 {
-  "name": "mean-auth-app",
-  "version": "1.0.0",
-  "description": "Mean stack auth app",
-  "main": "app.js",
-  "gypfile": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
-  },
-  "dependencies": {
-    "bcryptjs": "*",
-    "body-parser": "*",
-    "cors": "*",
-    "express": "*",
-    "jsonwebtoken": "*",
-    "mongoose": "^5.4.5",
-    "node-addon-api": "^1.7.1",
-    "passport": "*",
-    "passport-jwt": "*"
-  },
-  "author": "Aggie",
-  "license": "ISC"
+    "name": "Ag-Lite",
+    "version": "1.0.0",
+    "description": "App for demonstrating procedural generation built on the MEAN stack",
+    "main": "server.js",
+    "gypfile": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "*",
+        "express": "^4.17.1",
+        "mongoose": "^5.7.5",
+        "node-addon-api": "^1.7.1"
+    },
+    "author": "Aggie",
+    "license": "ISC"
 }

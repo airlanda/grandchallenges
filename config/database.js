@@ -1,4 +1,3 @@
 module.exports = {
-    database : 'mongodb://localhost:27017/meanauth',
-    secret: 'yoursercret'
+    database: 'mongodb://localhost:27017/aglite',
 }

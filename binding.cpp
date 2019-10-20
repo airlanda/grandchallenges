@@ -542,50 +542,50 @@ return true;
 }
 			 
 // /**+main **/
-// int main()
-// {	 uint i;
-//    char getcommand[maxlen];
-//    nativerand=1;
-//    printf("\nWelcome to Text Elite 1.5.\n");
+int initGame()
+{	 uint i;
+   char getcommand[maxlen];
+   nativerand=1;
+   printf("\nWelcome to Text Elite 1.5.\n");
 
-//    for(i=0;i<=lasttrade;i++) strcpy(tradnames[i],commodities[i].name);
+   for(i=0;i<=lasttrade;i++) strcpy(tradnames[i],commodities[i].name);
 
-//    mysrand(12345);/* Ensure repeatability */
+   mysrand(12345);/* Ensure repeatability */
 
-//    galaxynum=1;	buildgalaxy(galaxynum);
+   galaxynum=1;	buildgalaxy(galaxynum);
 
-//    currentplanet=numforLave;                        /* Don't use jump */
-//    localmarket = genmarket(0x00,galaxy[numforLave]);/* Since want seed=0 */
+   currentplanet=numforLave;                        /* Don't use jump */
+   localmarket = genmarket(0x00,galaxy[numforLave]);/* Since want seed=0 */
 
-//    fuel=maxfuel;
+   fuel=maxfuel;
    
-// #define PARSER(S) { char buf[0x10];strcpy(buf,S);parser(buf);}   
+#define PARSER(S) { char buf[0x10];strcpy(buf,S);parser(buf);}   
    
-//    PARSER("hold 20");         /* Small cargo bay */
-//    PARSER("cash +100");       /* 100 CR */
-//    PARSER("help");
+   PARSER("hold 20");         /* Small cargo bay */
+   PARSER("cash +100");       /* 100 CR */
+   PARSER("help");
 
-// #undef PARSER
+#undef PARSER
 
-//    for(;;)
-//    { printf("\n\nCash :%.1f>",((float)cash)/10);
-//      gets(getcommand);
-//      parser(getcommand);
-//    }
+  //  for(;;)
+  //  { printf("\n\nCash :%.1f>",((float)cash)/10);
+  //    gets_s(getcommand);
+  //    parser(getcommand);
+  //  }
    
-//    /* Unreachable */
+   /* Unreachable */
 
  
-//    /* 6502 Elite fires up at Lave with fluctuation=00
-//       and these prices tally with the NES ones.
-//       However, the availabilities reside in the saved game data.
-//       Availabilities are calculated (and fluctuation randomised)
-//       on hyperspacing
-//       I have checked with this code for Zaonce with fluctaution &AB 
-//       against the SuperVision 6502 code and both prices and availabilities tally.
-//    */
-// return(0);
-// }
+   /* 6502 Elite fires up at Lave with fluctuation=00
+      and these prices tally with the NES ones.
+      However, the availabilities reside in the saved game data.
+      Availabilities are calculated (and fluctuation randomised)
+      on hyperspacing
+      I have checked with this code for Zaonce with fluctaution &AB 
+      against the SuperVision 6502 code and both prices and availabilities tally.
+   */
+return(0);
+}
 
 /* "Goat Soup" planetary description string code - adapted from Christian Pinder's
   reverse engineered sources. */
@@ -734,27 +734,40 @@ Napi::String Method(const Napi::CallbackInfo& info) {
   return Napi::String::New(env, "world");
 }
 
-Napi::Object TestMethod(const Napi::CallbackInfo& info) {
+Napi::Array StartGame(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   buildgalaxy(100);
   std::cout<< "Building galaxiess";
   uint test1 = 1;
   uint test2 = 2;
-  Napi::Object payload = Napi::Object::New(env);
-  payload.Set("xValue", Napi::Number::New(env, test1));
-  payload.Set("yValue", Napi::Number::New(env, test2));
+  Napi::Array dataAg =  Napi::Array::New(env, 256);
 
-  return payload;
+  initGame();
+  for(uint32_t solarSystemIndex=0;solarSystemIndex<256;++solarSystemIndex){
+    Napi::Object payload = Napi::Object::New(env);
+    payload.Set("xValue", Napi::Number::New(env, test1));
+    payload.Set("yValue", Napi::Number::New(env, test2));
+    payload.Set("x", Napi::Number::New(env, galaxy[solarSystemIndex].x));
+    payload.Set("y", Napi::Number::New(env, galaxy[solarSystemIndex].y));
+    payload.Set("economy", Napi::Number::New(env, galaxy[solarSystemIndex].economy));
+    payload.Set("govtype", Napi::Number::New(env, galaxy[solarSystemIndex].govtype));
+    payload.Set("techlev", Napi::Number::New(env, galaxy[solarSystemIndex].techlev));
+    payload.Set("population", Napi::Number::New(env, galaxy[solarSystemIndex].population));
+    payload.Set("radius", Napi::Number::New(env, galaxy[solarSystemIndex].radius));
+    payload.Set("name", Napi::String::New(env, galaxy[solarSystemIndex].name));
+    dataAg[solarSystemIndex] = payload;
+  }
+  
+  return dataAg;
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports.Set(Napi::String::New(env, "hello"),
-              Napi::Function::New(env, Method));
-    exports.Set("TestMethod",
-              Napi::Function::New(env, TestMethod));
+
+    exports.Set("StartGame",
+              Napi::Function::New(env, StartGame));
               
   return exports;
 }
 
 
-NODE_API_MODULE(hello, Init)
+NODE_API_MODULE(AgLite, Init)

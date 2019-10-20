@@ -11,7 +11,7 @@
       "dependencies": [
         "<!(node -p \"require('node-addon-api').gyp\")"
       ],
-      "libraries": [ "D:\Development\React\mean-auth-app\TXTELITE.lib" ],
+      # "libraries": [ "D:\Development\React\mean-auth-app\TXTELITE.lib" ],
       "cflags!": ["-fno-exceptions"],
       "cflags_cc!": ["-fno-exceptions"],
       "defines": ["NAPI_CPP_EXCEPTIONS"]

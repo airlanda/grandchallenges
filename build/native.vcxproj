@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E27CC332-671C-C5B3-F062-6FC1C1D03ACA}</ProjectGuid>
+    <ProjectGuid>{22E91397-0002-38F7-05C7-0722C8E1CF2E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>native</RootNamespace>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\React\mean-auth-app\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\GrandChallenges\grandchallenges\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -69,7 +69,7 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\Users\Ag\.node-gyp\10.16.3\x64\node.lib&quot;;D:\Development\React\mean-auth-app\TXTELITE.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\Users\Ag\.node-gyp\10.16.3\x64\node.lib&quot;</AdditionalDependencies>
       <AdditionalOptions>/ignore:4199 %(AdditionalOptions)</AdditionalOptions>
       <AllowIsolation>true</AllowIsolation>
       <DataExecutionPrevention>true</DataExecutionPrevention>
@@ -84,13 +84,13 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\React\mean-auth-app\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\GrandChallenges\grandchallenges\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=native;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;NAPI_CPP_EXCEPTIONS;BUILDING_NODE_EXTENSION;DEBUG;_DEBUG;V8_ENABLE_CHECKS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\React\mean-auth-app\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\GrandChallenges\grandchallenges\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
@@ -118,7 +118,7 @@
       <AdditionalOptions>/LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\Users\Ag\.node-gyp\10.16.3\x64\node.lib&quot;;D:\Development\React\mean-auth-app\TXTELITE.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\Users\Ag\.node-gyp\10.16.3\x64\node.lib&quot;</AdditionalDependencies>
       <AdditionalOptions>/ignore:4199 /LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
       <AllowIsolation>true</AllowIsolation>
       <DataExecutionPrevention>true</DataExecutionPrevention>
@@ -135,7 +135,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\React\mean-auth-app\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Ag\.node-gyp\10.16.3\include\node;C:\Users\Ag\.node-gyp\10.16.3\src;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\config;C:\Users\Ag\.node-gyp\10.16.3\deps\openssl\openssl\include;C:\Users\Ag\.node-gyp\10.16.3\deps\uv\include;C:\Users\Ag\.node-gyp\10.16.3\deps\zlib;C:\Users\Ag\.node-gyp\10.16.3\deps\v8\include;D:\Development\GrandChallenges\grandchallenges\node_modules\node-addon-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=native;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;NAPI_CPP_EXCEPTIONS;BUILDING_NODE_EXTENSION;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\node_modules\node-addon-api\src\nothing.vcxproj">
-      <Project>{465A506C-E2E2-8110-9123-98C648B612CE}</Project>
+      <Project>{D382C6ED-6745-DED9-12EE-D4BA83A64CBE}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
