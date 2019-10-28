@@ -135,7 +135,7 @@ char unitnames[][5] ={"t","kg","g"};
 /*                   Base  Grad Base Mask Un   Name
                      price ient quant     it              */ 
 
-#define POLITICALLY_CORRECT	0
+#define POLITICALLY_CORRECT	1
 /* Set to 1 for NES-sanitised trade goods */
 
 tradegood commodities[]=

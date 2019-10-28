@@ -542,7 +542,7 @@ return true;
 }
 			 
 // /**+main **/
-int initGame()
+int initGame(int galaxyNumber)
 {	 uint i;
    char getcommand[maxlen];
    nativerand=1;
@@ -552,7 +552,7 @@ int initGame()
 
    mysrand(12345);/* Ensure repeatability */
 
-   galaxynum=1;	buildgalaxy(galaxynum);
+   galaxynum=galaxyNumber;	buildgalaxy(galaxynum);
 
    currentplanet=numforLave;                        /* Don't use jump */
    localmarket = genmarket(0x00,galaxy[numforLave]);/* Since want seed=0 */
@@ -742,7 +742,9 @@ Napi::Array StartGame(const Napi::CallbackInfo& info) {
   uint test2 = 2;
   Napi::Array dataAg =  Napi::Array::New(env, 256);
 
-  initGame();
+  Napi::Object payLoad = info[0].ToObject();
+  Napi::Number galaxyNumber = payLoad.Get("galaxyNumber").As<Napi::Number>();
+  initGame(galaxyNumber.Int32Value());
   for(uint32_t solarSystemIndex=0;solarSystemIndex<256;++solarSystemIndex){
     Napi::Object payload = Napi::Object::New(env);
     payload.Set("xValue", Napi::Number::New(env, test1));
@@ -757,7 +759,14 @@ Napi::Array StartGame(const Napi::CallbackInfo& info) {
     payload.Set("name", Napi::String::New(env, galaxy[solarSystemIndex].name));
     dataAg[solarSystemIndex] = payload;
   }
-  
+  Napi::Array commoditiesArray =  Napi::Array::New(env, 16);
+   for(uint32_t index=0;index<16;++index){
+     Napi::Object commoditiesObj = Napi::Object::New(env);
+     commoditiesObj.Set("name", Napi::String::New(env, commodities[index].name));
+     commoditiesObj.Set("quantity", Napi::Number::New(env, localmarket.quantity[index]));
+     commoditiesArray[index] = commoditiesObj;
+   }
+   dataAg[256] = commoditiesArray;
   return dataAg;
 }
 

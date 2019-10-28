@@ -171,7 +171,7 @@
     "searchopts": "",
     "searchstaleness": "900",
     "send_metrics": "",
-    "shell": "C:\\Windows\\system32\\cmd.exe",
+    "shell": "C:\\WINDOWS\\system32\\cmd.exe",
     "shrinkwrap": "true",
     "sign_git_commit": "",
     "sign_git_tag": "",

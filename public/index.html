@@ -10,6 +10,7 @@
 
     <title>Agtivision</title>
     <script src="js/data.js"></script>
+    <script src="js/logic.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Roboto+Condensed:400,300,700" rel="stylesheet" />
@@ -23,19 +24,19 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
         <div class="container">
-            <a class="navbar-brand" href="#">Ag Irlanda - Grand Challenges - Prof Obermyer </a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home
               <span class="sr-only">(current)</span>
             </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:lime" href="">Action 1</a>
+                        <div class="nav-link" onclick="getGalaxyData()" style="color:lime">Wormhole</div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Action2</a>
@@ -44,6 +45,11 @@
                         <a class="nav-link" href="#">Action3</a>
                     </li>
                 </ul>
+                <div class="mylinks">Galaxy X<span id="galaxyNumberEl">1</span>, 256 systems </div>
+            </div>
+
+            <div class="logoContainer">
+                <img id="agtivision2" src="./img/AgtivisionCropped.png" alt="Grog!" />
             </div>
         </div>
     </nav>
@@ -51,418 +57,45 @@
     <!-- Page Content -->
     <section>
         <div class="container">
-            <div class="row row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col col-lg-2">
 
                 </div>
-                <div class="col-md-auto" style="text-align: center">
-                    <!-- <h6 class="mt-5" style="color: lime;text-align: left">Ag Industries</h6> -->
-
-                    <div style='margin-top: 20px'>
-                        <img id="agtivision2" src="./img/AgtivisionCropped.png" alt="Grog!" />
-                    </div>
-
-                    <div style="position:relative;color:orange; font-size:6pt;text-align:right; margin-top: 0px;top:-2em;left:-25em">1984 Agtivision, Inc</div>
+                <div class="col col-lg-4" style="text-align: center">
 
                 </div>
                 <div class="col col-lg-2">
 
                 </div>
             </div>
-            <div class="row row justify-content-md-center">
 
-                <div class="col-lg-4">
+            <div class="row justify-content-center">
+
+                <div class="col col-sm-2">
+                    <div>
+                        <h6>System</h6>
+                    </div>
+                    <div id="systemList" class="systemList"></div>
+                </div>
+                <div class="col" style="margin: auto;text-align: center;">
+                    <h6>Galaxy Map</h6>
                     <canvas id="stage" width="512" height="512"></canvas>
                 </div>
-
+                <div class="col col-lg-4">
+                    <div>
+                        <h6>System Details</h6>
+                    </div>
+                    <div id="systemDetails"></div>
+                </div>
 
             </div>
-            <audio id="audioControl" controls autoplay loop style="position: absolute;top:1em;right:4em">
+            <!-- <audio id="audioControl" controls autoplay loop style="position: absolute;top:1em;right:4em">
         <source src="./audio/soundtrack.mp3" type="audio/mp3">
       Your browser does not support the audio element.
-      </audio>
-            <a href="http://www.csc.villanova.edu/~mdamian/classes/csc8470/" target="_new" class="mylinks" style="position: absolute;top:2.5em;left:2.5em">
-          Galaxy X1, 256 systems  <i class="fa fa-rocket" aria-hidden="true"></i></a>
+      </audio> -->
+
     </section>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        var audio = document.getElementById("audioControl");
-        audio.volume = 0.05;
-    </script>
-    <script>
-        var canvas; // DOM object corresponding to the canvas
-        var graphics; // 2D graphics context for drawing on the canvas
-        var interval;
-
-        // Opera 8.0+
-        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
-        // Firefox 1.0+
-        var isFirefox = typeof InstallTrigger !== 'undefined';
-
-
-        // Chrome 1 - 71
-        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-
-        function mousedownHandler(event) {
-            //Find the mouse's X and Y positions
-            var xOffSet = 0;
-            var yOffset = 0;
-
-            if (isFirefox) {
-                xOffSet = canvas.offsetLeft;
-                yOffset = canvas.offsetTop;
-            }
-
-            var mouseX = event.layerX - xOffSet;
-            var mouseY = event.layerY - yOffset;
-            console.log("x " + mouseX + " " + "y " + mouseY)
-            solarSystems.forEach(system => {
-                //setPixel(system.x * 2, system.y * 2, "white", system.radius / 2000);
-
-                if ((mouseX >= (system.x * 2) - 5) && (mouseX <= (system.x * 2) + 5) &&
-                    (mouseY >= system.y * 2 - 5) && (mouseY <= system.y * 2 + 5)) {
-                    graphics.fillStyle = "black";
-                    graphics.fillRect(system.x * 2 + 20, system.y * 2 - 10, 120, 75);
-
-
-                    graphics.beginPath();
-                    graphics.lineWidth = "1";
-                    graphics.strokeStyle = "lime";
-                    graphics.rect(system.x * 2 + 20, system.y * 2 - 10, 120, 75);
-                    graphics.stroke();
-
-                    graphics.font = "11px agmmodore";
-                    graphics.fillStyle = "lime";
-                    // graphics.textAlign = "center";
-                    graphics.fillText(system.name, system.x * 2 + 30, system.y * 2 + 5);
-                    graphics.fillText(system.govtype, system.x * 2 + 30, system.y * 2 + 20);
-                    graphics.fillText(system.economy, system.x * 2 + 30, system.y * 2 + 35);
-                }
-
-
-            });
-            //Define
-        }
-
-        function hitService() {
-            var request = new XMLHttpRequest()
-
-            request.open('GET', 'http://localhost:3000/startGame', true)
-            console.log("opening");
-            request.onload = function() {
-                // Begin accessing JSON data here
-                solarSystems = JSON.parse(this.response)
-                console.log("onLoading");
-                if (request.status >= 200 && request.status < 400) {
-                    solarSystems.forEach(system => {
-                        setPixel(system.x * 2, system.y * 2, "white", system.radius / 2000);
-
-                        //if (system.name == "LAVE")
-                        // setPixel(system.x * 2, system.y * 2, "white", 20);
-                        //console.log(system.name)
-                    })
-                } else {
-                    console.log('error')
-                }
-            }
-
-            request.send()
-        }
-
-        function renderPlanetSystems() {
-            for (var i = 0; i < solarSystems.length; i++) {
-                console.log(solarSystems[i].x + " " +
-                    solarSystems[i].y);
-
-                setPixel(solarSystems[i].x * 2, solarSystems[i].y * 2, "white", 2);
-
-                if (solarSystems[i].name == "LAVE")
-                    setPixel(solarSystems[i].x * 2, solarSystems[i].y * 2, "white", 20);
-            }
-        }
-
-        function setPixel(x, y, color, radius) {
-            graphics.fillStyle = color;
-            // graphics.fillRect(x, y, thickness, thickness);
-            fillCircle(x, y, color, radius)
-        }
-
-        function fillCircle(cx, cy, color, radius) {
-            graphics.beginPath();
-            // Do NOT change the arguments to arc
-            graphics.arc(cx, cy, radius, 0, 2 * Math.PI, false);
-            graphics.fillStyle = color;
-            graphics.strokeStyle = "lime";
-            graphics.fill();
-
-        }
-
-        function drawLineX(x1, y1, x2, y2, pixelColor, thickness) {
-            // TODO: your code here
-            var dy = Math.abs(y2 - y1);
-            var dx = x2 - x1;
-
-            var twoDx = 2 * dx;
-            var twoDy = 2 * dy;
-
-            var dHat = twoDy - dx;
-
-
-            var y = y1;
-            var yIncrease = ((y2 < y1) ? -1 : 1);
-
-            for (var x = x1; x <= x2; x++) {
-                setPixel(x, y, pixelColor, thickness);
-                if (dHat <= 0) {
-                    dHat += twoDy;
-
-                } else {
-                    dHat += twoDy - twoDx;
-                    y += yIncrease;
-                }
-            }
-        }
-
-        function drawLineY(x1, y1, x2, y2, pixelColor, thickness) {
-            // TODO: your code here
-            var dy = y2 - y1;
-            var dx = Math.abs(x2 - x1);
-
-            var twoDx = dx + dx;
-            var twoDy = dy + dy;
-
-            var dHat = twoDx - dy;
-
-            var xIncrease = 1;
-            if (x1 > x2) xIncrease = -1;
-
-
-            for (var y = y1, x = x1; y <= y2; y++) {
-                setPixel(x, y, pixelColor, thickness);
-                if (dHat <= 0) {
-                    dHat += twoDx;
-                } else {
-                    dHat += twoDx - twoDy;
-                    x += xIncrease;
-                }
-            }
-        }
-
-        // Implements Bresenham's rasterizer to draw line
-        // DOES NOT USE ANY FLOATING-POINT ARITHMETIC
-        function drawLineFast(x1, y1, x2, y2, pixelColor, thickness) {
-            var dy = y2 - y1;
-            var dx = x2 - x1;
-
-            var m = dy / dx;
-
-            if (Math.abs(dx) >= Math.abs(dy)) {
-                if (x2 > x1)
-                    drawLineX(x1, y1, x2, y2, pixelColor, thickness);
-                else
-                    drawLineX(x2, y2, x1, y1, pixelColor, thickness);
-            } else {
-                if (y2 > y1)
-                    drawLineY(x1, y1, x2, y2, pixelColor, thickness);
-                else
-                    drawLineY(x2, y2, x1, y1, pixelColor, thickness);
-            }
-        }
-
-        function renderStarAnimation(cx, cy, outerR, innerR, color, thickness, theta1, theta2) {
-
-            var outerPoints = [];
-            var innerPoints = [];
-            var thetaStep = 2 * Math.PI / 5;
-
-            for (var i = theta1; i < (5 * thetaStep + theta1); i += thetaStep) {
-                outerPoints.push({
-                    "x": cx + Math.round(outerR * Math.cos(i)),
-                    "y": cy + Math.round(outerR * Math.sin(i))
-                })
-            }
-
-            // initial angle for the first inner point
-
-            // TODO: write a loop to compute inner point coordinates in an array
-            for (var i = theta2; i < 5 * thetaStep + theta2; i += thetaStep) {
-                innerPoints.push({
-                    "x": cx + Math.round(innerR * Math.cos(i)),
-                    "y": cy + Math.round(innerR * Math.sin(i))
-                })
-
-            }
-            // TODO: write a loop that draws the star outline using drawLineFast
-            for (var i = 0; i < outerPoints.length; i++) {
-
-                drawLineFast(outerPoints[i].x, outerPoints[i].y,
-                    innerPoints[i].x, innerPoints[i].y, color, thickness);
-                if (i == 0)
-                    drawLineFast(innerPoints[innerPoints.length - 1].x, innerPoints[innerPoints.length - 1].y,
-                        outerPoints[i].x, outerPoints[i].y, color, thickness);
-                else
-                    drawLineFast(innerPoints[i - 1].x, innerPoints[i - 1].y,
-                        outerPoints[i].x, outerPoints[i].y, color, thickness);
-
-            }
-
-        }
-
-        function animateStarRotation(cx, cy, outerR, innerR, color, thickness) {
-
-            var rotDegrees = 0;
-            var thetaStep = 2 * Math.PI / 5; // angle between consecutive outer/inner points
-
-            var theta1 = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-            var theta2 = Math.PI / 2 - thetaStep / 2;
-            var angle = rotDegrees * (Math.PI / 180);
-            var starColor = "red";
-            interval = setInterval(function() {
-                graphics.clearRect(0, 0, canvas.width, canvas.height);
-                renderStarAnimation(cx, cy, outerR, innerR, starColor, thickness, theta1, theta2);
-                rotDegrees++;
-                var angle = rotDegrees * (Math.PI / 180);
-                theta1 += angle;
-                theta2 += angle;
-                if (rotDegrees == 359) {
-                    rotDegrees = 0;
-                    var r = Math.floor(Math.random() * 256);
-                    var g = Math.floor(Math.random() * 256);
-                    var b = Math.floor(Math.random() * 256);
-                    starColor = "rgb(" + r + "," + g + "," + b + ")";
-                    theta1 = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-                    theta2 = Math.PI / 2 - thetaStep / 2;
-                }
-            }, 33);
-
-        }
-
-        // Draws a star centered at (cx, cy), with outer points  
-        // at distance outerR, and inner points at distance innerR 
-        function drawStar(cx, cy, outerR, innerR, color, thickness) {
-
-            var thetaStep = 2 * Math.PI / 5; // angle between consecutive outer/inner points
-
-            var theta = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-
-
-            var outerPoints = [];
-            var innerPoints = [];
-            // TODO: write a loop to compute outer point coordinates in an array
-            //      xcoord = cx + Math.round(outerR * Math.cos(theta));
-            //      ycoord = cy + Math.round(outerR * Math.sin(theta));
-            //      update theta
-
-            for (var i = theta; i < (5 * thetaStep + theta); i += thetaStep) {
-                outerPoints.push({
-                    "x": cx + Math.round(outerR * Math.cos(i)),
-                    "y": cy + Math.round(outerR * Math.sin(i))
-                })
-            }
-
-            theta = Math.PI / 2 - thetaStep / 2; // initial angle for the first inner point
-            // TODO: write a loop to compute inner point coordinates in an array
-            for (var i = theta; i < 5 * thetaStep + theta; i += thetaStep) {
-                innerPoints.push({
-                    "x": cx + Math.round(innerR * Math.cos(i)),
-                    "y": cy + Math.round(innerR * Math.sin(i))
-                })
-
-            }
-            // TODO: write a loop that draws the star outline using drawLineFast
-            for (var i = 0; i < outerPoints.length; i++) {
-
-                drawLineFast(outerPoints[i].x, outerPoints[i].y,
-                    innerPoints[i].x, innerPoints[i].y, color, thickness);
-                if (i == 0)
-                    drawLineFast(innerPoints[innerPoints.length - 1].x, innerPoints[innerPoints.length - 1].y,
-                        outerPoints[i].x, outerPoints[i].y, color, thickness);
-                else
-                    drawLineFast(innerPoints[i - 1].x, innerPoints[i - 1].y,
-                        outerPoints[i].x, outerPoints[i].y, color, thickness);
-
-            }
-        }
-
-        function testAlgorithm() {
-
-            drawLineFast(50, 300, 350, 100, "magenta"); // slope < 1 
-            drawLineFast(350, 100, 50, 300, "purple"); // switch points; code should still work
-            drawLineFast(200, 80, 100, 380, "red"); // slope > 1     
-            drawLineFast(50, 200, 350, 200, "green"); // slope = 0
-            drawLineFast(250, 50, 250, 350, "blue"); // slope = ∞ 
-        }
-
-        function draw() {
-            // TODO: your code here, using calls to drawLineFast and drawStar only
-            // testAlgorithm();
-            drawStar(200, 200, 100, 50, "red", 2);
-        }
-
-        function renderStars() {
-
-            var outerRadius = Math.floor(Math.random() * 76);
-            var innerRadius = Math.floor(outerRadius / 2)
-            var centerX = Math.floor(Math.random() * 400);
-            var centerY = Math.floor(Math.random() * 400);
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            drawStar(centerX, centerY, outerRadius, innerRadius, "rgb(" + r + "," + g + "," + b + ")", 2);
-
-        }
-
-        function animateStarColors() {
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            drawStar(200, 200, 100, 50, "rgb(" + r + "," + g + "," + b + ")", 4);
-        }
-
-        function renderBasicStar() {
-            drawStar(200, 200, 100, 50, "red", 2);
-        }
-
-
-        function runHomeWork(section) {
-            clearInterval(interval);
-            graphics.clearRect(0, 0, canvas.width, canvas.height);
-            if (section == "star") {
-                renderBasicStar();
-                // interval = setInterval(function(){
-                //   renderBasicStar();
-                // }, 33);
-
-            } else if (section == "random") {
-                interval = setInterval(function() {
-                    renderStars();
-                }, 33);
-            } else if (section == "colors") {
-                interval = setInterval(function() {
-                    animateStarColors();
-                }, 33);
-            } else if (section == "rotate") {
-                animateStarRotation(200, 200, 100, 50, "red", 2);
-            }
-        }
-
-        function main() {
-            canvas = document.getElementById("stage");
-            graphics = canvas.getContext("2d");
-            canvas.addEventListener("click", mousedownHandler, false);
-            graphics.fillStyle = "black";
-            graphics.fillRect(0, 0, canvas.width, canvas.height);
-            hitService();
-            //;
-
-
-        }
-    </script>
 </body>
 
 </html>

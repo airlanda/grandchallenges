@@ -15,9 +15,18 @@ router.get("/route2", (req, res, next) => {
 });
 
 //Profile
-router.get("/startGame", (req, res, next) => {
-    var buffer = nodeMod.StartGame();
+router.post("/startGame", (req, res, next) => {
+
+    //req.body.galaxyNumber
+    let userInputs = {
+        galaxyNumber: req.body.galaxyNumber,
+
+    };
+    console.log(userInputs.galaxyNumber)
+    var buffer = nodeMod.StartGame(userInputs);
+    var commodities = buffer[256];
     console.log(buffer);
+    console.log(commodities);
     res.send(buffer);
 });
 

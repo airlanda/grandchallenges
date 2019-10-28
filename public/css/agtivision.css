@@ -9,6 +9,7 @@
  }
  
  body {
+     margin-top: 1em;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      background-size: cover;
@@ -121,13 +122,15 @@
  
  .navbar-dark {
      color: lime;
-     background: -webkit-linear-gradient(300deg, #1e462a, #000);
-     background: -moz-linear-gradient(top, #1e462a, #000);
-     background: linear-gradient(top, #1e462a, #000);
+     background: -webkit-linear-gradient(300deg, black, #000);
+     background: -moz-linear-gradient(top, black, #000);
+     background: linear-gradient(top, black, #000);
      -webkit-box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
      -moz-box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
      box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
+     */ background: black;
      border-top: 1px solid yellow;
+     max-height: 2.5em;
  }
  
  .navbar-dark .navbar-nav .active>.nav-link,
@@ -138,13 +141,20 @@
  }
  
  #agtivision {
-     width: 40%;
-     height: 40%;
+     width: 25%;
+     height: 25%;
+ }
+ 
+ .logoContainer {
+     position: fixed;
+     bottom: 0;
+     right: 0;
+     width: 10%;
  }
  
  #agtivision2 {
-     width: 30%;
-     height: 30%;
+     width: 90%;
+     height: 90%;
  }
  
  .carouselimage {
@@ -158,14 +168,14 @@
      -webkit-text-stroke: 1px #000;
      -moz-text-stroke: 1px #000;
      text-stroke: .1em #000;
-     font-size: 14pt;
+     font-size: 12pt;
      transform: scale(.5, 1);
      text-align: left;
      left: -10em;
  }
  
  .nav-link {
-     font-size: 12px;
+     font-size: .5em;
      border: 1px solid lime;
      margin-left: 5px;
      -webkit-border-radius: 10px;
@@ -213,6 +223,17 @@
      border: .1em solid yellow;
  }
  
+ .systemDetails {
+     position: relative;
+     left: -2em;
+     box-shadow: 5px 5px 5px rgba(100, 100, 100, 0.5);
+     border: .1em solid yellow;
+     padding: 1em;
+     color: lime;
+     font-size: .6rem;
+     padding-top: 0em;
+ }
+ 
  .title {
      color: whitesmoke;
      text-stroke: 1em #000;
@@ -237,8 +258,9 @@
  .mylinks {
      letter-spacing: 0em;
      color: lime;
-     font-size: .7em;
+     font-size: .5em;
      font-family: "emulogic";
+     padding-left: 2em;
  }
  
  a:hover {
@@ -248,4 +270,33 @@
  
  #audioControl {
      background-color: #000;
+ }
+ 
+ .systemList {
+     font-size: .6rem;
+     color: yellow;
+     max-height: 512px;
+     overflow-y: scroll;
+     scrollbar-color: lime black;
+     scrollbar-width: thin;
+ }
+ /* width */
+ 
+ ::-webkit-scrollbar {
+     width: 10px;
+ }
+ /* Track */
+ 
+ ::-webkit-scrollbar-track {
+     background: black;
+ }
+ /* Handle */
+ 
+ ::-webkit-scrollbar-thumb {
+     background: lime;
+ }
+ /* Handle on hover */
+ 
+ ::-webkit-scrollbar-thumb:hover {
+     background: yellow;
  }
