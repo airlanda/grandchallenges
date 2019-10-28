@@ -13,6 +13,8 @@ The protype's functionaity is infant at the moment but I'm able to generate the 
 
 Once the app is installed, run npm start and navigate to http://localhost:3000/startGame
 
+ Also, navigate http://localhost:3000/ for the UI protptype. It currently renders galaxy 1 with it's systems. 
+
 This will return 256 planetary systems from the default galaxy.
 
 ## License
