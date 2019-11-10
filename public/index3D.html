@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agtivision</title>
+    <script src="js/data.js"></script>
+    <script src="js/logic3D.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Roboto+Condensed:400,300,700"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link href="css/agtivision.css" rel="stylesheet">
+
+    <script src="./build/three.js"></script>
+    <script src="./build/OrbitControls.js"></script>
+
+    <script>
+        var scene, camera, renderer;  // Three.js rendering basics
+
+        var canvas;     // The canvas on which the image is rendered
+
+        var mouse;      // Used to navigate the scene with the mouse
+
+        var dirLight;   // Our directional light is global so we can change its position
+        var angle = 0;  // The angle (about the y-axis) of the directional light
+
+        // Create a camera, sitting on the positive z-axis.  The camera is not part of the scene
+        function createCamera() {
+            camera = new THREE.PerspectiveCamera(40, canvas.width / canvas.height, 0.1, 2048);
+            camera.position.z = 100; // 300 pull back the camera
+            camera.position.x = 512;
+            camera.position.y = 512;
+
+            // Add orbit control to allow the camera orbit around
+            mouse = new THREE.OrbitControls(camera, renderer.domElement);
+        }
+
+        // Create the scene. This function is called once, as soon as the page loads.
+        // The renderer has already been created before this function is called.
+        function createScene() {
+            renderer.setClearColor(0); // Set background color (0, or 0x000000, is black).
+
+            scene = new THREE.Scene(); // Create a new scene which we can add objects to.
+
+            // TODO Step 0: increase number of segments and rings and notice the difference
+            var radius = 3,
+                segments = 32,
+                rings = 32
+
+            // create the sphere
+            var sphereGeom = new THREE.SphereGeometry(radius, segments, rings);
+            var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
+            var sphere = new THREE.Mesh(sphereGeom, sphereMat);
+
+            // add the sphere to the scene
+            //scene.add(sphere);
+        }
+
+        // add lights to the scene
+        function createLights() {
+            // AmbientLight (color, intensity)
+            ambientLight = new THREE.AmbientLight("blue");
+            scene.add(ambientLight);
+
+            // TODO Step 1: add point light
+            //point light
+            // PointLight(color, intensity, fading distance)
+            pointLight = new THREE.PointLight("green", 2, 50);
+            pointLight.position.set(12, 2, 10);
+            scene.add(pointLight);
+            // PointLightHelper(light, size)
+            scene.add(new THREE.PointLightHelper(pointLight, 1)); // see where the light is
+
+            // TODO Step 2: add directional light
+            // DirectionalLight (color, intensity)
+            dirLight = new THREE.DirectionalLight("white", 1);
+            dirLight.position.set(12, 2, 10);
+            scene.add(dirLight);
+        }
+
+        // Render the scene. This is called for each frame of the animation.
+        function render() {
+            requestAnimationFrame(render);
+
+            // things to change go here
+            // TODO Step 3: move the directional light
+            var x = Math.sin(angle);
+            var y = Math.cos(angle);
+
+            dirLight.position.x = x;
+            dirLight.position.z = y;
+            angle += .01;
+            renderer.render(scene, camera);
+
+            mouse.update();
+        }
+
+        //----------------------------------------------------------------------------------
+
+        // The init() function is called by the onload event when the document has loaded.
+        function init() {
+            try {
+                canvas = document.getElementById("glcanvas");
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            }
+            catch (e) {
+                document.getElementById("canvas-holder").innerHTML = "<h3><b>WebGL is not available.</b><h3>";
+                return;
+            }
+
+            hitService();
+            // create camera
+            createCamera();
+
+            // create scene 
+            createScene();
+
+            // create lights 
+            createLights();
+
+            // render scene
+            render();
+        }
+
+    </script>
+
+</head>
+
+<body onload="init()">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" onclick="getGalaxyData()" style="color:lime">Wormhole</div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Action2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Action3</a>
+                    </li>
+                </ul>
+                <div class="mylinks">Galaxy X<span id="galaxyNumberEl">1</span>, 256 systems </div>
+            </div>
+
+            <div class="logoContainer">
+                <img id="agtivision2" src="./img/AgtivisionCropped.png" alt="Grog!" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-lg-2">
+
+                </div>
+                <div class="col col-lg-4" style="text-align: center">
+
+                </div>
+                <div class="col col-lg-2">
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+
+                <div class="col col-sm-2">
+                    <div>
+                        <h6>System</h6>
+                    </div>
+                    <div id="systemList" class="systemList"></div>
+                </div>
+                <div class="col" style="margin: auto;text-align: center;">
+                    <h6>Galaxy Map</h6>
+                    <canvas id="glcanvas" width="512" height="512"></canvas>
+                </div>
+                <div class="col col-lg-4">
+                    <div>
+                        <h6>System Details</h6>
+                    </div>
+                    <div id="systemDetails"></div>
+                </div>
+
+            </div>
+            <!-- <audio id="audioControl" controls autoplay loop style="position: absolute;top:1em;right:4em">
+        <source src="./audio/soundtrack.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+      </audio> -->
+
+    </section>
+
+</body>
+
+</html>
