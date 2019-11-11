@@ -84,7 +84,7 @@ function mousedownHandler(event) {
     var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
     var sphere = new THREE.Mesh(sphereGeom, sphereMat);
     var zPos = getRandomArbitrary(-1024, 1024);
-    sphere.position.set(solarSystems[i].x * 4, solarSystems[i].y * 4, zPos);
+    sphere.position.set(solarSystems[i].x * 4, solarSystems[i].y * 4, solarSystems[i].z);
     scene.add(sphere);
     // var sphereGeom = new THREE.SphereGeometry(radius, segments, rings);
     // var sphereMat = new THREE.MeshLambertMaterial({ color: "blue" });
@@ -141,7 +141,7 @@ function hitService() {
         var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
         var sphere = new THREE.Mesh(sphereGeom, sphereMat);
         var zPos = getRandomArbitrary(-1024, 1024);
-        sphere.position.set(system.x * 4, system.y * 4, zPos);
+        sphere.position.set(system.x * 4, system.y * 4, system.z * 4);
         sphere["name"] = system.name;
         scene.add(sphere);
         var systemList = document.getElementById("systemList");

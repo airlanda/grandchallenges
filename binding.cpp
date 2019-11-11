@@ -191,6 +191,7 @@ plansys makesystem(seedtype *s)
  
   thissys.x=(((*s).w1)>>8);
   thissys.y=(((*s).w0)>>8);
+  thissys.z=(((*s).w2)>>8);
 
   thissys.govtype =((((*s).w1)>>3)&7); /* bits 3,4 &5 of w1 */
 
@@ -751,6 +752,8 @@ Napi::Array StartGame(const Napi::CallbackInfo& info) {
     payload.Set("yValue", Napi::Number::New(env, test2));
     payload.Set("x", Napi::Number::New(env, galaxy[solarSystemIndex].x));
     payload.Set("y", Napi::Number::New(env, galaxy[solarSystemIndex].y));
+    payload.Set("z", Napi::Number::New(env, galaxy[solarSystemIndex].z));
+    printf("\nZvalue\n " + galaxy[solarSystemIndex].z);
     payload.Set("economy", Napi::String::New(env,econnames[ galaxy[solarSystemIndex].economy]));
     payload.Set("govtype", Napi::String::New(env, govnames[galaxy[solarSystemIndex].govtype]));
     payload.Set("techlev", Napi::Number::New(env, galaxy[solarSystemIndex].techlev));

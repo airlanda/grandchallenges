@@ -36,8 +36,8 @@
         function createCamera() {
             camera = new THREE.PerspectiveCamera(40, canvas.width / canvas.height, 0.1, 2048);
             camera.position.z = 100; // 300 pull back the camera
-            camera.position.x = 512;
-            camera.position.y = 512;
+            camera.position.x = 100;
+            camera.position.y = 100;
 
             // Add orbit control to allow the camera orbit around
             mouse = new THREE.OrbitControls(camera, renderer.domElement);
