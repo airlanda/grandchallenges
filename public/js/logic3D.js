@@ -80,8 +80,8 @@ function mousedownHandler(event) {
   console.log("x " + mouseX + " " + "y " + mouseY);
   solarSystems.forEach(system => {
     //setPixel(system.x * 2, system.y * 2, "white", system.radius / 2000);
-    var sphereGeom = new THREE.SphereGeometry(5, 10, 10);
-    var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
+    var sphereGeom = new THREE.SphereGeometry(5, 20, 20);
+    var sphereMat = new THREE.MeshBasicMaterial({ color: "white" });
     var sphere = new THREE.Mesh(sphereGeom, sphereMat);
     var zPos = getRandomArbitrary(-1024, 1024);
     sphere.position.set(solarSystems[i].x * 4, solarSystems[i].y * 4, solarSystems[i].z);
@@ -130,14 +130,14 @@ function hitService() {
   request.open("POST", "http://localhost:3000/startGame", true);
   console.log("opening");
   systemList.innerHTML = "";
-  request.onload = function() {
+  request.onload = function () {
     // Begin accessing JSON data here
     solarSystems = JSON.parse(this.response);
     console.log("onLoading");
     systemHash = {};
     if (request.status >= 200 && request.status < 400) {
       solarSystems.forEach(system => {
-        var sphereGeom = new THREE.SphereGeometry(5, 10, 10);
+        var sphereGeom = new THREE.SphereGeometry(2, 10, 10);
         var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
         var sphere = new THREE.Mesh(sphereGeom, sphereMat);
         var zPos = getRandomArbitrary(-1024, 1024);
@@ -148,7 +148,7 @@ function hitService() {
         systemList.innerHTML +=
           "<div id='" +
           system.name +
-          "' onclick='showSystemDetails(event)' style='border-top: 1px solid #e9ce7c;padding:4px;cursor:pointer'>" +
+          "' onclick='showSystemDetails(event)' style='border-top: 1px solid rgb(74, 210, 190);padding:4px;cursor:pointer'>" +
           system.name +
           "</div>";
         if (system.name) systemHash[system.name] = system;
@@ -347,7 +347,7 @@ function animateStarRotation(cx, cy, outerR, innerR, color, thickness) {
   var theta2 = Math.PI / 2 - thetaStep / 2;
   var angle = rotDegrees * (Math.PI / 180);
   var starColor = "red";
-  interval = setInterval(function() {
+  interval = setInterval(function () {
     graphics.clearRect(0, 0, canvas.width, canvas.height);
     renderStarAnimation(
       cx,
@@ -487,11 +487,11 @@ function runHomeWork(section) {
     //   renderBasicStar();
     // }, 33);
   } else if (section == "random") {
-    interval = setInterval(function() {
+    interval = setInterval(function () {
       renderStars();
     }, 33);
   } else if (section == "colors") {
-    interval = setInterval(function() {
+    interval = setInterval(function () {
       animateStarColors();
     }, 33);
   } else if (section == "rotate") {

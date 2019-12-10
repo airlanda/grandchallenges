@@ -1,0 +1,330 @@
+@font-face {
+  font-family: "space";
+  src: url("./font/Orbitron Medium.ttf") format("truetype");
+}
+
+.nav-link {
+  font-size: 12px;
+  font-family: "space";
+  border: 2px solid rgb(74, 210, 190);
+  color: rgb(66, 114, 98);
+  margin-left: 5px;
+  padding: 5px;
+  /* -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px; */
+  background: rgba(6, 32, 45, 0.5);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.nav-link:hover {
+  background-color: darkgreen;
+  color: #000;
+}
+
+body {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+
+  /* background-color: black; */
+  font-family: "space", "san-serif";
+  /* background: linear-gradient(to right,rgb(5,5,5),#000,  #000, #000,  #111 ); */
+  -webkit-animation: fadein 2s;
+  /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 5s;
+  /* Firefox < 16 */
+  -ms-animation: fadein 5s;
+  /* Internet Explorer */
+  -o-animation: fadein 5s;
+  /* Opera < 12.1 */
+  animation: fadein 5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Firefox < 16 */
+
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Safari, Chrome and Opera > 12.1 */
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Internet Explorer */
+
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Opera < 12.1 */
+
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "space";
+  line-height: 1.1em;
+  color: whitesmoke;
+  font-weight: 100;
+  margin-bottom: 2;
+  font-size-adjust: -5px;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  font-weight: inherit;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 1000ms ease-in;
+}
+
+.navbar-dark {
+  color: rgb(66, 114, 98);
+  background: -webkit-linear-gradient(300deg, black, #000);
+  background: -moz-linear-gradient(top, black, #000);
+  background: linear-gradient(top, black, #000);
+  -webkit-box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
+  -moz-box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
+  box-shadow: 10px -5px 5px rgba(100, 100, 100, 0.5);
+  */background: black;
+  border-top: 1px solid rgb(74, 210, 190);
+  max-height: 2.5em;
+}
+
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show > .nav-link {
+  color: whitesmoke;
+}
+
+#agtivision {
+  width: 25%;
+  height: 25%;
+}
+
+.logoContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 10%;
+}
+
+#agtivision2 {
+  width: 90%;
+  height: 90%;
+}
+
+.carouselimage {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar-brand {
+  position: relative;
+  color: #e9ce7c;
+  -webkit-text-stroke: 1px #000;
+  -moz-text-stroke: 1px #000;
+  text-stroke: 0.1em #000;
+  font-size: 12pt;
+  transform: scale(0.5, 1);
+  text-align: left;
+  left: -10em;
+}
+
+/* .nav-link {
+  font-size: 0.5em;
+  border: 1px solid lime;
+  margin-left: 5px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: black;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+} */
+
+/* .nav-link:hover {
+  background-color: darkgreen;
+  color: #000;
+} */
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 8pt;
+  padding: 4px;
+}
+
+#about {
+  width: 35em;
+  height: 30em;
+  position: relative;
+  background: black;
+  border-radius: 15px;
+  -webkit-box-shadow: 5px 5px 5px rgba(100, 100, 100, 0.5);
+  -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 5px rgba(100, 100, 100, 0.5);
+  border: 0.3em solid lime;
+  color: whitesmoke;
+  font-size: 0.65em;
+  margin-left: 10px;
+  padding: 10px;
+  line-height: 2;
+  font-family: "space", sans-serif;
+}
+
+#glcanvas {
+}
+#sytemDetailsContainer {
+  position: absolute;
+  right: 40px;
+  top: 2px;
+  padding: 5px;
+  border: 1px solid rgb(74, 210, 190);
+  background: rgba(0, 0, 0, 0.5);
+  color: rgb(66, 114, 98);
+  font-size: 0.7rem;
+  width: 200px;
+}
+#systemListContainer {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  padding: 5px;
+  border: 1px solid rgb(74, 210, 190);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.systemDetails {
+  position: relative;
+  padding: 1em;
+  color: rgb(66, 114, 98);
+  font-size: 0.7rem;
+  padding-top: 0em;
+}
+
+.title {
+  color: whitesmoke;
+  text-stroke: 1em #000;
+}
+
+.cap-title {
+  color: rgb(66, 114, 98);
+  font-weight: 300;
+  text-stroke: 0.3em #000;
+  padding-bottom: 0.3em;
+}
+
+.carousel-caption {
+  font-size: 0.7em;
+  padding: 2em;
+}
+
+.caption-text {
+  font-size: 0.9em;
+}
+
+.mylinks {
+  letter-spacing: 0em;
+  color: rgb(66, 114, 98);
+  font-size: 0.7em;
+  font-family: "space";
+  padding-left: 2em;
+}
+
+a:hover {
+  color: yellow;
+  text-decoration: none;
+}
+
+#audioControl {
+  background-color: #000;
+}
+
+.systemList {
+  font-size: 0.7rem;
+  color: rgb(66, 114, 98);
+  max-height: 512px;
+  overflow-y: scroll;
+  scrollbar-color: lime black;
+  scrollbar-width: thin;
+}
+/* width */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid rgb(74, 210, 190);
+}
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: yellow;
+}

@@ -13,14 +13,16 @@
     <script src="js/logic3D.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Roboto+Condensed:400,300,700"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link href="css/agtivision.css" rel="stylesheet">
+
+    <link href="css/agtivision3D.css" rel="stylesheet">>
 
     <script src="./build/three.js"></script>
     <script src="./build/OrbitControls.js"></script>
+
+    <script src="js/KeyboardState.js">
+        var keyboard = new KeyboardState();
+
+    </script>
 
     <script>
         var scene, camera, renderer;  // Three.js rendering basics
@@ -28,6 +30,7 @@
         var canvas;     // The canvas on which the image is rendered
 
         var mouse;      // Used to navigate the scene with the mouse
+        var keyboard = new KeyboardState();
 
         var dirLight;   // Our directional light is global so we can change its position
         var angle = 0;  // The angle (about the y-axis) of the directional light
@@ -35,9 +38,8 @@
         // Create a camera, sitting on the positive z-axis.  The camera is not part of the scene
         function createCamera() {
             camera = new THREE.PerspectiveCamera(40, canvas.width / canvas.height, 0.1, 2048);
-            camera.position.z = 100; // 300 pull back the camera
-            camera.position.x = 100;
-            camera.position.y = 100;
+            camera.position.set(1134, 1147, 848);
+
 
             // Add orbit control to allow the camera orbit around
             mouse = new THREE.OrbitControls(camera, renderer.domElement);
@@ -99,10 +101,25 @@
             dirLight.position.z = y;
             angle += .01;
             renderer.render(scene, camera);
+            if (keyboard.pressed("P")) {
 
+                console.log("Camera" + JSON.stringify(camera.position));
+                console.log("Camera" + JSON.stringify(camera.rotation));
+            }
             mouse.update();
         }
+        function printCamStuff() {
+            console.log("Camera" + JSON.stringify(camera.position));
+            console.log("Camera" + JSON.stringify(camera.rotation));
+        }
+        function onWindowResize() {
 
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+        }
         //----------------------------------------------------------------------------------
 
         // The init() function is called by the onload event when the document has loaded.
@@ -110,18 +127,23 @@
             try {
                 canvas = document.getElementById("glcanvas");
                 renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+                window.addEventListener('resize', onWindowResize, false);
             }
             catch (e) {
                 document.getElementById("canvas-holder").innerHTML = "<h3><b>WebGL is not available.</b><h3>";
                 return;
             }
 
-            hitService();
+
             // create camera
             createCamera();
 
             // create scene 
             createScene();
+
+            hitService();
 
             // create lights 
             createLights();
@@ -136,7 +158,7 @@
 
 <body onload="init()">
 
-    <!-- Navigation -->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
         <div class="container">
 
@@ -152,16 +174,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <div class="nav-link" onclick="getGalaxyData()" style="color:lime">Wormhole</div>
+                        <div class="nav-link" onclick="getGalaxyData()">Next Galaxy</div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Action2</a>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" onclick="printCamStuff()">Action2</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Action3</a>
-                    </li>
+                    </li> -->
                 </ul>
-                <div class="mylinks">Galaxy X<span id="galaxyNumberEl">1</span>, 256 systems </div>
+                <div class="mylinks">GALAXY X<span id="galaxyNumberEl">1</span>, 256 SYSTEMS </div>
             </div>
 
             <div class="logoContainer">
@@ -170,47 +192,27 @@
         </div>
     </nav>
 
-    <!-- Page Content -->
-    <section>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col col-lg-2">
 
-                </div>
-                <div class="col col-lg-4" style="text-align: center">
+    <div id="systemListContainer">
+        <div>
+            <h6>SYSTEM</h6>
+        </div>
+        <div id="systemList" class="systemList"></div>
+    </div>
 
-                </div>
-                <div class="col col-lg-2">
+    <div style="margin: auto;text-align: center; width:100%;height:100%">
+        <canvas id="glcanvas" style="width:95%;height:95%"></canvas>
+    </div>
+    <div id="sytemDetailsContainer">
+        <div>
+            <h6>SYSTEM DETAILS</h6>
+        </div>
+        <div id="systemDetails"></div>
+    </div>
+    <div style="position:absolute; right:40px; bottom:80px;color:white">
+        Click and drag to rotate map <br />Scroll Wheel to Zoom in/out
+    </div>
 
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-
-                <div class="col col-sm-2">
-                    <div>
-                        <h6>System</h6>
-                    </div>
-                    <div id="systemList" class="systemList"></div>
-                </div>
-                <div class="col" style="margin: auto;text-align: center;">
-                    <h6>Galaxy Map</h6>
-                    <canvas id="glcanvas" width="512" height="512"></canvas>
-                </div>
-                <div class="col col-lg-4">
-                    <div>
-                        <h6>System Details</h6>
-                    </div>
-                    <div id="systemDetails"></div>
-                </div>
-
-            </div>
-            <!-- <audio id="audioControl" controls autoplay loop style="position: absolute;top:1em;right:4em">
-        <source src="./audio/soundtrack.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-      </audio> -->
-
-    </section>
 
 </body>
 
