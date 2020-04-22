@@ -1,3 +1,5 @@
+#include <string.h>
+
 #define true (-1)
 #define false (0)
 #define tonnes (0)
@@ -137,8 +139,8 @@ tradegood commodities[] =
         {0x14, -0x01, 0x0A, 0x03, 0, "Textiles    "},
         {0x41, -0x03, 0x02, 0x07, 0, "Radioactives"},
 #if POLITICALLY_CORRECT
-        {0x28, -0x05, 0xE2, 0x1F, 0, "Robot Slaves"},
-        {0x53, -0x05, 0xFB, 0x0F, 0, "Beverages   "},
+        {0x28, -0x05, 0xE2, 0x1F, 0, "Work Droids "},
+        {0x53, -0x05, 0xFB, 0x0F, 0, "Wine Spirits"},
 #else
         {0x28, -0x05, 0xE2, 0x1F, 0, "Slaves      "},
         {0x53, -0x05, 0xFB, 0x0F, 0, "Liquor/Wines"},
@@ -165,7 +167,7 @@ tradegood commodities[] =
 char tradnames[lasttrade][maxlen]; /* Tradegood names used in text commands
                                       Set using commodities array */
 
-void goat_soup(const char *source, plansys *psy);
+std::string goat_soup(const char *source, plansys *psy);
 
 #define nocomms (14)
 

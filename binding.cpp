@@ -5,12 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sstream> 
 
 #include <conio.h>
 #include <math.h>
 #include <malloc.h>
 
 using namespace std;
+std::stringstream systemDesc;
+
 void mysrand(unsigned int seed)
 {	srand(seed);
 	lastrand = seed - 1;
@@ -191,6 +194,7 @@ plansys makesystem(seedtype *s)
  
   thissys.x=(((*s).w1)>>8);
   thissys.y=(((*s).w0)>>8);
+  // Added a z coordinate to the struct
   thissys.z=(((*s).w2)>>8);
 
   thissys.govtype =((((*s).w1)>>3)&7); /* bits 3,4 &5 of w1 */
@@ -271,12 +275,9 @@ void nextgalaxy(seedtype *s) /* Apply to base seed; once for galaxy 2  */
 /* Original game generated from scratch each time info needed */
 void buildgalaxy(unsigned short galaxynum)
 {	uint syscount,galcount;
-  std::cout<<"galaxies";
 	seed.w0=base0; seed.w1=base1; seed.w2=base2; /* Initialise seed for galaxy 1 */
 	for(galcount=1;galcount<galaxynum;++galcount) 
   { 
-   std::cout<<"galaxies";
-
     nextgalaxy(&seed);
     }
 
@@ -316,31 +317,38 @@ planetnum matchsys(char *s)
 
 
 /**-Print data for given system **/
-void prisys(plansys plsy,boolean compressed)
+void prisys(plansys planetSystem,boolean compressed)
 {	if (compressed)
 	{	
    //	  printf("\n ");
-	  printf("%10s",plsy.name);
-  	printf(" TL: %2i ",(plsy.techlev)+1);
-  	printf("%12s",econnames[plsy.economy]);
-  	printf(" %15s",govnames[plsy.govtype]);
+	  printf("%10s",planetSystem.name);
+  	printf(" TL: %2i ",(planetSystem.techlev)+1);
+  	printf("%12s",econnames[planetSystem.economy]);
+  	printf(" %15s",govnames[planetSystem.govtype]);
 	}
 	else
 	{	printf("\n\nSystem:  ");
-  	printf(plsy.name);
-  	printf("\nPosition (%i,",plsy.x);
-  	printf("%i)",plsy.y);
-  	printf("\nEconomy: (%i) ",plsy.economy);
-  	printf(econnames[plsy.economy]);
-  	printf("\nGovernment: (%i) ",plsy.govtype);
-  	printf(govnames[plsy.govtype]);
-  	printf("\nTech Level: %2i",(plsy.techlev)+1);
-  	printf("\nTurnover: %u",(plsy.productivity));
-  	printf("\nRadius: %u",plsy.radius);
-  	printf("\nPopulation: %u Billion",(plsy.population)>>3);
-	
-		rnd_seed = plsy.goatsoupseed;
-		printf("\n");goat_soup("\x8F is \x97.",&plsy);
+  	printf(planetSystem.name);
+  	printf("\nPosition (%i,",planetSystem.x);
+  	printf("%i)",planetSystem.y);
+  	printf("\nEconomy: (%i) ",planetSystem.economy);
+  	printf(econnames[planetSystem.economy]);
+  	printf("\nGovernment: (%i) ",planetSystem.govtype);
+  	printf(govnames[planetSystem.govtype]);
+  	printf("\nTech Level: %2i",(planetSystem.techlev)+1);
+  	printf("\nTurnover: %u",(planetSystem.productivity));
+  	printf("\nRadius: %u",planetSystem.radius);
+  	printf("\nPopulation: %u Billion",(planetSystem.population)>>3);
+
+    // C'mon 80's programmesrs, get it together. //TODO: Refactor to 
+    // send this as argumnet to the randome number generator function and then send 
+		rnd_seed = planetSystem.goatsoupseed;
+		printf("\n");
+    //TODO: Hack. Not sure why using a stringstream locally is breaking the plugin at runtime
+    // when the goat_soup method is called. So had to keep a global stringstream buffer
+    // to save the systems description.
+    goat_soup("\x8F is \x97.",&planetSystem);
+
 	}
 }
 
@@ -361,7 +369,7 @@ boolean dolocal(char *s)
    { 	d=distance(galaxy[syscount],galaxy[currentplanet]);
    		if(d<=maxfuel)
     	{ 	if(d<=fuel)	printf("\n * "); else printf("\n - ");
-    		prisys(galaxy[syscount],true);
+    		//prisys(galaxy[syscount],true);
       		printf(" (%.1f LY)",(float)d/10);
     	}
    }
@@ -377,7 +385,7 @@ boolean dojump(char *s) /* Jump to planet name s */
   if (d>fuel) { printf("\nJump to far"); return false; }
   fuel-=d;
   gamejump(dest);
-  prisys(galaxy[currentplanet],false);
+  //prisys(galaxy[currentplanet],false);
   return true;
 }
 
@@ -405,7 +413,7 @@ boolean dogalhyp(char *s) /* Jump to next galaxy */
 
 boolean doinfo(char *s) /* Info on planet */
 {	planetnum dest=matchsys(s);
-  prisys(galaxy[dest],false);
+ // prisys(galaxy[dest],false);
 	return true;
 }
 
@@ -523,22 +531,22 @@ boolean doquit(char *s)
 boolean dohelp(char *s)
 {
    (void)(&s);
-   printf("\nCommands are:");
-   printf("\nBuy   tradegood ammount");
-   printf("\nSell  tradegood ammount");
-   printf("\nFuel  ammount    (buy ammount LY of fuel)");
-   printf("\nJump  planetname (limited by fuel)");
-   printf("\nSneak planetname (any distance - no fuel cost)");
-   printf("\nGalhyp           (jumps to next galaxy)");
-   printf("\nInfo  planetname (prints info on system");
-   printf("\nMkt              (shows market prices)");
-   printf("\nLocal            (lists systems within 7 light years)");
-   printf("\nCash number      (alters cash - cheating!)");
-   printf("\nHold number      (change cargo bay)");
-   printf("\nQuit or ^C       (exit)");
-   printf("\nHelp             (display this text)");
- 	 printf("\nRand             (toggle RNG)");
-   printf("\n\nAbbreviations allowed eg. b fo 5 = Buy Food 5, m= Mkt");
+  //  printf("\nCommands are:");
+  //  printf("\nBuy   tradegood ammount");
+  //  printf("\nSell  tradegood ammount");
+  //  printf("\nFuel  ammount    (buy ammount LY of fuel)");
+  //  printf("\nJump  planetname (limited by fuel)");
+  //  printf("\nSneak planetname (any distance - no fuel cost)");
+  //  printf("\nGalhyp           (jumps to next galaxy)");
+  //  printf("\nInfo  planetname (prints info on system");
+  //  printf("\nMkt              (shows market prices)");
+  //  printf("\nLocal            (lists systems within 7 light years)");
+  //  printf("\nCash number      (alters cash - cheating!)");
+  //  printf("\nHold number      (change cargo bay)");
+  //  printf("\nQuit or ^C       (exit)");
+  //  printf("\nHelp             (display this text)");
+ 	//  printf("\nRand             (toggle RNG)");
+  //  printf("\n\nAbbreviations allowed eg. b fo 5 = Buy Food 5, m= Mkt");
 return true;
 }
 			 
@@ -547,7 +555,7 @@ int initGame(int galaxyNumber)
 {	 uint i;
    char getcommand[maxlen];
    nativerand=1;
-   printf("\nWelcome to Text Elite 1.5.\n");
+   //printf("\nWelcome to Text Elite 1.5.\n");
 
    for(i=0;i<=lasttrade;i++) strcpy(tradnames[i],commodities[i].name);
 
@@ -604,7 +612,7 @@ static struct desc_choice desc_list[] =
 /* 87 */	{"talking tree", "crab", "bat", "lobst", "\xB2"},
 /* 88 */	{"beset", "plagued", "ravaged", "cursed", "scourged"},
 /* 89 */	{"\x96 civil war", "\x9B \x98 \x99s", "a \x9B disease", "\x96 earthquakes", "\x96 solar activity"},
-/* 8A */	{"its \x83 \x84", "the \xB1 \x98 \x99","its inhabitants' \x9A \x85", "\xA1", "its \x8D \x8E"},
+/* 8A */	{"its \x83 \x84", "the \xB1 \x98 \x99","its inhabitants \x9A \x85", "\xA1", "its \x8D \x8E"},
 /* 8B */	{"juice", "brandy", "water", "brew", "gargle blasters"},
 /* 8C */	{"\xB2", "\xB1 \x99", "\xB1 \xB2", "\xB1 \x9B", "\x9B \xB2"},
 /* 8D */	{"fabulous", "exotic", "hoopy", "unusual", "exciting"},
@@ -655,92 +663,114 @@ int gen_rnd_number (void)
 }
 
 
-void goat_soup(const char *source,plansys * psy)
-{	for(;;)
-	{	int c=*(source++);
+std::string goat_soup(const char *source,plansys * planetSystem)
+{	
+
+  for(;;)
+	{	
+    //uint8 c=*(source++);
+
+    char ch = *(source++);     // HACK HACK
+		int c = ch & (ch + 256);
+
 		if(c=='\0')	break;
-		if(c<0x80) printf("%c",c);
+		if(c<0x80) {
+      //printf("%c",c);
+      char asciiChar = c;
+      //cout << asciiChar;
+      systemDesc << asciiChar;
+
+    }
 		else
 		{	if (c <=0xA4)
 			{	int rnd = gen_rnd_number();
-				goat_soup(desc_list[c-0x81].option[(rnd >= 0x33)+(rnd >= 0x66)+(rnd >= 0x99)+(rnd >= 0xCC)],psy);
+				goat_soup(desc_list[c-0x81].option[(rnd >= 0x33)+(rnd >= 0x66)+(rnd >= 0x99)+(rnd >= 0xCC)],planetSystem);
 			}
 			else switch(c)
 			{ case 0xB0: /* planet name */
 		 		{ int i=1;
-					printf("%c",psy->name[0]);
-					while(psy->name[i]!='\0') printf("%c",tolower(psy->name[i++]));
+					//printf("%c",planetSystem->name[0]);
+          //cout << planetSystem->name[0];
+          systemDesc << planetSystem->name[0];
+					while(planetSystem->name[i]!='\0') 
+          {//printf("%c",tolower(planetSystem->name[i++]));
+            //cout << planetSystem->name[i++];
+            systemDesc << planetSystem->name[i++];
+          }
 				}	break;
 				case 0xB1: /* <planet name>ian */
 				{ int i=1;
-					printf("%c",psy->name[0]);
-					while(psy->name[i]!='\0')
-					{	if((psy->name[i+1]!='\0') || ((psy->name[i]!='E')	&& (psy->name[i]!='I')))
-						printf("%c",tolower(psy->name[i]));
+					//printf("%c",planetSystem->name[0]);
+          systemDesc << planetSystem->name[0];
+					while(planetSystem->name[i]!='\0')
+					{	if((planetSystem->name[i+1]!='\0') || ((planetSystem->name[i]!='E')	&& (planetSystem->name[i]!='I')))
+						//printf("%c",tolower(planetSystem->name[i]));
+            systemDesc << planetSystem->name[i];
 						i++;
 					}
-					printf("ian");
+					systemDesc << ("ian");
 				}	break;
 				case 0xB2: /* random name */
+          #if 1 // 1.5
+        {
+          int i;
+          int len = gen_rnd_number() & 3;
+          for (i = 0; i <= len; i++)
+          {
+            int x = gen_rnd_number() & 0x3e;
+            if (i == 0)
+            {
+               systemDesc << pairs0[x];
+              //printf("%c", pairs0[x]);
+            }
+            else
+            {
+              systemDesc << pairs0[x];
+              //printf("%c", pairs0[x]);
+            }
+            systemDesc << pairs0[x + 1];
+            //printf("%c", tolower(pairs0[x + 1]));
 
+          } // endfor
+        }
+#else // 1.4-
 
-
-
-#if 1 // 1.5
-{
-int i;
-int len = gen_rnd_number() & 3;
-for (i = 0; i <= len; i++)
-{
-int x = gen_rnd_number() & 0x3e;
-if (i == 0)
- {
- printf("%c",pairs0[x]);
- }
-else
-{
- printf("%c",tolower(pairs0[x]));
-}
-
- printf("%c",tolower(pairs0[x+1]));
-
-} // endfor
-}
-#else	// 1.4-
-
-
-
-				{	int i;
-					int len = gen_rnd_number() & 3;
-					for(i=0;i<=len;i++)
-					{	int x = gen_rnd_number() & 0x3e;
-						if(pairs0[x]!='.') printf("%c",pairs0[x]);
-						if(i && (pairs0[x+1]!='.')) printf("%c",pairs0[x+1]);
-					}
-				}
-#endif				
+        {
+          int i;
+          int len = gen_rnd_number() & 3;
+          for (i = 0; i <= len; i++)
+          {
+            int x = gen_rnd_number() & 0x3e;
+            if (pairs0[x] != '.')
+              systemDesc << pairs0[x];
+              //printf("%c", pairs0[x]);
+            if (i && (pairs0[x + 1] != '.'))
+             systemDesc << pairs0[x + 1];
+              //printf("%c", pairs0[x + 1]);
+          }
+        }
+#endif
 				
 					break;
-				default: printf("<bad char in data [%X]>",c); return;
+				default: printf("<bad char in data [%X]>",c);
 			}	/* endswitch */
 		}	/* endelse */
 	}	/* endwhile */
+
+  return systemDesc.str();
 }	/* endfunc */
 
 /**+end **/
 Napi::String Method(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   buildgalaxy(100);
-  std::cout<< "Building galaxiess";
+  std::cout<< "Building galaxies";
   return Napi::String::New(env, "world");
 }
 
 Napi::Array StartGame(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  buildgalaxy(100);
-  std::cout<< "Building galaxiess";
-  uint test1 = 1;
-  uint test2 = 2;
+  //buildgalaxy(100);
   Napi::Array dataAg =  Napi::Array::New(env, 256);
 
   Napi::Object payLoad = info[0].ToObject();
@@ -748,18 +778,22 @@ Napi::Array StartGame(const Napi::CallbackInfo& info) {
   initGame(galaxyNumber.Int32Value());
   for(uint32_t solarSystemIndex=0;solarSystemIndex<256;++solarSystemIndex){
     Napi::Object payload = Napi::Object::New(env);
-    payload.Set("xValue", Napi::Number::New(env, test1));
-    payload.Set("yValue", Napi::Number::New(env, test2));
     payload.Set("x", Napi::Number::New(env, galaxy[solarSystemIndex].x));
     payload.Set("y", Napi::Number::New(env, galaxy[solarSystemIndex].y));
     payload.Set("z", Napi::Number::New(env, galaxy[solarSystemIndex].z));
-    printf("\nZvalue\n " + galaxy[solarSystemIndex].z);
     payload.Set("economy", Napi::String::New(env,econnames[ galaxy[solarSystemIndex].economy]));
     payload.Set("govtype", Napi::String::New(env, govnames[galaxy[solarSystemIndex].govtype]));
     payload.Set("techlev", Napi::Number::New(env, galaxy[solarSystemIndex].techlev));
     payload.Set("population", Napi::Number::New(env, galaxy[solarSystemIndex].population));
     payload.Set("radius", Napi::Number::New(env, galaxy[solarSystemIndex].radius));
     payload.Set("name", Napi::String::New(env, galaxy[solarSystemIndex].name));
+
+    rnd_seed = galaxy[solarSystemIndex].goatsoupseed;
+    std::string systemDescription = goat_soup("\x8F is \x97.",&galaxy[solarSystemIndex]);
+    payload.Set("description", Napi::String::New(env, systemDescription));
+    systemDesc.str(std::string());
+
+    //systemDesc.str(std::string());
     dataAg[solarSystemIndex] = payload;
   }
   Napi::Array commoditiesArray =  Napi::Array::New(env, 16);
@@ -770,6 +804,7 @@ Napi::Array StartGame(const Napi::CallbackInfo& info) {
      commoditiesArray[index] = commoditiesObj;
    }
    dataAg[256] = commoditiesArray;
+  // prisys(galaxy[currentplanet],false);
   return dataAg;
 }
 

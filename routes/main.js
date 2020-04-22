@@ -1,32 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
 const nodeMod = require('../build/Release/native');
 
-//route1
-router.post("/route1", (req, res, next) => {
-
-});
-
-//Authenticate
-router.get("/route2", (req, res, next) => {
-
-
-});
 
 //Profile
 router.post("/startGame", (req, res, next) => {
 
+    //const start = Date.now();
     //req.body.galaxyNumber
     let userInputs = {
         galaxyNumber: req.body.galaxyNumber,
 
     };
-    console.log(userInputs.galaxyNumber)
+    //console.log(userInputs.galaxyNumber)
+    // Call method on the C++ side, returns galaxy/planetary data 
     var buffer = nodeMod.StartGame(userInputs);
-    var commodities = buffer[256];
-    console.log(buffer);
-    console.log(commodities);
+
+    //console.log(buffer);
     res.send(buffer);
 });
 

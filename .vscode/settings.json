@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "TXTELITE.C": "cpp",
+        "iostream": "cpp",
+        "xstring": "cpp"
+    }
+}

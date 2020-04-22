@@ -39,6 +39,8 @@ function showSystemDetails(event) {
       "<li>Economy: " + systemHash[event.target.id].economy + "<br/></li>";
     sysDetails.innerHTML +=
       "<li>Tech Level: " + systemHash[event.target.id].techlev + "<br/></li>";
+      sysDetails.innerHTML +=
+      "<li>Description: " + systemHash[event.target.id].description.toUpperCase(); + "<br/></li>";
     sysDetails.innerHTML += "</ul><br/>";
   }
 
@@ -152,7 +154,7 @@ function hitService() {
           system.name +
           "</div>";
         if (system.name) systemHash[system.name] = system;
-        else systemHash["commodities"] = system;
+         
       });
       var galaxyIndicator = document.getElementById("galaxyNumberEl");
       galaxyIndicator.innerHTML = galNo;
@@ -181,7 +183,7 @@ function renderPlanetSystems() {
     var sphereMat = new THREE.MeshLambertMaterial({ color: "white" });
     var sphere = new THREE.Mesh(sphereGeom, sphereMat);
     var zPos = getRandomArbitrary(-1024, 1024);
-    sphere.position.set(solarSystems[i].x * 4, solarSystems[i].y * 4, zPos);
+    sphere.position.set(solarSystems[i].x * 4, solarSystems[i].y * 4,  system.z * 4);
     scene.add(sphere);
     //  setPixel(solarSystems[i].x * 2, solarSystems[i].y * 2, "white", 2);
     //if (solarSystems[i].name == "LAVE")
@@ -261,193 +263,9 @@ function drawLineY(x1, y1, x2, y2, pixelColor, thickness) {
   }
 }
 
-// Implements Bresenham's rasterizer to draw line
-// DOES NOT USE ANY FLOATING-POINT ARITHMETIC
-function drawLineFast(x1, y1, x2, y2, pixelColor, thickness) {
-  var dy = y2 - y1;
-  var dx = x2 - x1;
 
-  var m = dy / dx;
 
-  if (Math.abs(dx) >= Math.abs(dy)) {
-    if (x2 > x1) drawLineX(x1, y1, x2, y2, pixelColor, thickness);
-    else drawLineX(x2, y2, x1, y1, pixelColor, thickness);
-  } else {
-    if (y2 > y1) drawLineY(x1, y1, x2, y2, pixelColor, thickness);
-    else drawLineY(x2, y2, x1, y1, pixelColor, thickness);
-  }
-}
 
-function renderStarAnimation(
-  cx,
-  cy,
-  outerR,
-  innerR,
-  color,
-  thickness,
-  theta1,
-  theta2
-) {
-  var outerPoints = [];
-  var innerPoints = [];
-  var thetaStep = (2 * Math.PI) / 5;
-
-  for (var i = theta1; i < 5 * thetaStep + theta1; i += thetaStep) {
-    outerPoints.push({
-      x: cx + Math.round(outerR * Math.cos(i)),
-      y: cy + Math.round(outerR * Math.sin(i))
-    });
-  }
-
-  // initial angle for the first inner point
-
-  // TODO: write a loop to compute inner point coordinates in an array
-  for (var i = theta2; i < 5 * thetaStep + theta2; i += thetaStep) {
-    innerPoints.push({
-      x: cx + Math.round(innerR * Math.cos(i)),
-      y: cy + Math.round(innerR * Math.sin(i))
-    });
-  }
-  // TODO: write a loop that draws the star outline using drawLineFast
-  for (var i = 0; i < outerPoints.length; i++) {
-    drawLineFast(
-      outerPoints[i].x,
-      outerPoints[i].y,
-      innerPoints[i].x,
-      innerPoints[i].y,
-      color,
-      thickness
-    );
-    if (i == 0)
-      drawLineFast(
-        innerPoints[innerPoints.length - 1].x,
-        innerPoints[innerPoints.length - 1].y,
-        outerPoints[i].x,
-        outerPoints[i].y,
-        color,
-        thickness
-      );
-    else
-      drawLineFast(
-        innerPoints[i - 1].x,
-        innerPoints[i - 1].y,
-        outerPoints[i].x,
-        outerPoints[i].y,
-        color,
-        thickness
-      );
-  }
-}
-
-function animateStarRotation(cx, cy, outerR, innerR, color, thickness) {
-  var rotDegrees = 0;
-  var thetaStep = (2 * Math.PI) / 5; // angle between consecutive outer/inner points
-
-  var theta1 = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-  var theta2 = Math.PI / 2 - thetaStep / 2;
-  var angle = rotDegrees * (Math.PI / 180);
-  var starColor = "red";
-  interval = setInterval(function () {
-    graphics.clearRect(0, 0, canvas.width, canvas.height);
-    renderStarAnimation(
-      cx,
-      cy,
-      outerR,
-      innerR,
-      starColor,
-      thickness,
-      theta1,
-      theta2
-    );
-    rotDegrees++;
-    var angle = rotDegrees * (Math.PI / 180);
-    theta1 += angle;
-    theta2 += angle;
-    if (rotDegrees == 359) {
-      rotDegrees = 0;
-      var r = Math.floor(Math.random() * 256);
-      var g = Math.floor(Math.random() * 256);
-      var b = Math.floor(Math.random() * 256);
-      starColor = "rgb(" + r + "," + g + "," + b + ")";
-      theta1 = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-      theta2 = Math.PI / 2 - thetaStep / 2;
-    }
-  }, 33);
-}
-
-// Draws a star centered at (cx, cy), with outer points
-// at distance outerR, and inner points at distance innerR
-function drawStar(cx, cy, outerR, innerR, color, thickness) {
-  var thetaStep = (2 * Math.PI) / 5; // angle between consecutive outer/inner points
-
-  var theta = Math.PI / 2 - thetaStep; // initial angle for the first outer point
-
-  var outerPoints = [];
-  var innerPoints = [];
-  // TODO: write a loop to compute outer point coordinates in an array
-  //      xcoord = cx + Math.round(outerR * Math.cos(theta));
-  //      ycoord = cy + Math.round(outerR * Math.sin(theta));
-  //      update theta
-
-  for (var i = theta; i < 5 * thetaStep + theta; i += thetaStep) {
-    outerPoints.push({
-      x: cx + Math.round(outerR * Math.cos(i)),
-      y: cy + Math.round(outerR * Math.sin(i))
-    });
-  }
-
-  theta = Math.PI / 2 - thetaStep / 2; // initial angle for the first inner point
-  // TODO: write a loop to compute inner point coordinates in an array
-  for (var i = theta; i < 5 * thetaStep + theta; i += thetaStep) {
-    innerPoints.push({
-      x: cx + Math.round(innerR * Math.cos(i)),
-      y: cy + Math.round(innerR * Math.sin(i))
-    });
-  }
-  // TODO: write a loop that draws the star outline using drawLineFast
-  for (var i = 0; i < outerPoints.length; i++) {
-    drawLineFast(
-      outerPoints[i].x,
-      outerPoints[i].y,
-      innerPoints[i].x,
-      innerPoints[i].y,
-      color,
-      thickness
-    );
-    if (i == 0)
-      drawLineFast(
-        innerPoints[innerPoints.length - 1].x,
-        innerPoints[innerPoints.length - 1].y,
-        outerPoints[i].x,
-        outerPoints[i].y,
-        color,
-        thickness
-      );
-    else
-      drawLineFast(
-        innerPoints[i - 1].x,
-        innerPoints[i - 1].y,
-        outerPoints[i].x,
-        outerPoints[i].y,
-        color,
-        thickness
-      );
-  }
-}
-
-function testAlgorithm() {
-  drawLineFast(50, 300, 350, 100, "magenta"); // slope < 1
-  drawLineFast(350, 100, 50, 300, "purple"); // switch points; code should still work
-  drawLineFast(200, 80, 100, 380, "red"); // slope > 1
-  drawLineFast(50, 200, 350, 200, "green"); // slope = 0
-  drawLineFast(250, 50, 250, 350, "blue"); // slope = ∞
-}
-
-function draw() {
-  // TODO: your code here, using calls to drawLineFast and drawStar only
-  // testAlgorithm();
-  drawStar(200, 200, 100, 50, "red", 2);
-}
 
 function renderStars() {
   var outerRadius = Math.floor(Math.random() * 76);
@@ -478,26 +296,6 @@ function renderBasicStar() {
   drawStar(200, 200, 100, 50, "red", 2);
 }
 
-function runHomeWork(section) {
-  clearInterval(interval);
-  graphics.clearRect(0, 0, canvas.width, canvas.height);
-  if (section == "star") {
-    renderBasicStar();
-    // interval = setInterval(function(){
-    //   renderBasicStar();
-    // }, 33);
-  } else if (section == "random") {
-    interval = setInterval(function () {
-      renderStars();
-    }, 33);
-  } else if (section == "colors") {
-    interval = setInterval(function () {
-      animateStarColors();
-    }, 33);
-  } else if (section == "rotate") {
-    animateStarRotation(200, 200, 100, 50, "red", 2);
-  }
-}
 
 function main() {
   galN0 = 1;

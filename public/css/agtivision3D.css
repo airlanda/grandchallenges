@@ -183,7 +183,6 @@ h6 a {
   color: #e9ce7c;
   -webkit-text-stroke: 1px #000;
   -moz-text-stroke: 1px #000;
-  text-stroke: 0.1em #000;
   font-size: 12pt;
   transform: scale(0.5, 1);
   text-align: left;
@@ -240,10 +239,10 @@ h6 a {
   top: 2px;
   padding: 5px;
   border: 1px solid rgb(74, 210, 190);
-  background: rgba(0, 0, 0, 0.5);
-  color: rgb(66, 114, 98);
-  font-size: 0.7rem;
-  width: 200px;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgb(74, 210, 190);
+  font-size: 1rem;
+  width: 300px;
 }
 #systemListContainer {
   position: absolute;
@@ -257,8 +256,8 @@ h6 a {
 .systemDetails {
   position: relative;
   padding: 1em;
-  color: rgb(66, 114, 98);
-  font-size: 0.7rem;
+  color:  rgb(74, 210, 190);
+  font-size: 0.8rem;
   padding-top: 0em;
 }
 
@@ -301,12 +300,14 @@ a:hover {
 }
 
 .systemList {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgb(66, 114, 98);
-  max-height: 512px;
+  max-height: 600px;
+  min-width: 200px;
   overflow-y: scroll;
   scrollbar-color: lime black;
   scrollbar-width: thin;
+  text-align: center;
 }
 /* width */
 

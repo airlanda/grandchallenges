@@ -2,20 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const config = require('./config/database.js')
-const nodeMod = require('./build/Release/native');
 const mainRoutes = require("./routes/main");
-
-mongoose.connect(config.database);
-
-mongoose.connection.on('connected', () => {
-    console.log('Connected to database ' + config.database);
-});
-
-mongoose.connection.on('error', (error) => {
-    console.log('Error connecting to DB: ' + error);
-});
 
 const app = express();
 
